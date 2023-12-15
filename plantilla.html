@@ -51,7 +51,6 @@ table {
 .contenido {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* flex-direction: column; */
     align-items: center;
     gap: 20px;
     
@@ -176,7 +175,6 @@ table {
             let textButtonProcess = document.getElementById("textButtonProcess");
             let buttonProcess = document.getElementById("botonprocesar");
             let loader = document.getElementById("loader");
-
             
             spin.className = "fa fa-spinner fa-spin";
             buttonProcess.disabled = true;
@@ -205,7 +203,7 @@ table {
                 putOnlyUsedFonts:true,
                 floatPrecision: 16
             };
-            var doc = new jsPDF(options);
+            let doc = new jsPDF(options);
 
             const [regular, bold] = await getFonts();
             await setFontsToPDF(doc, regular, bold);
@@ -748,19 +746,25 @@ table {
 
 
         async function workbookToJson(workbook) {
-            if (!workbook) {
+            try {
+                if (!workbook) {
+                    return undefined;
+                }
+                const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                if (!sheet) {
+                    return undefined;
+                }
+
+                // const data_headers = ["socio","apellido1","apellido2","nombre"];
+                const jsonData = XLSX.utils.sheet_to_json(sheet, {header: 0});
+                if (!jsonData) {
+                    return undefined;
+                }
+                jsonData.sort((a, b) => a.apellido1.localeCompare(b.apellido1));
+                return jsonData;
+            } catch(error) {
                 return undefined;
             }
-            const sheet = workbook.Sheets[workbook.SheetNames[0]];
-            if (!sheet) {
-                return undefined;
-            }
-            const jsonData = XLSX.utils.sheet_to_json(sheet, {header: 0});
-            if (!jsonData) {
-                return undefined;
-            }
-            jsonData.sort((a, b) => a.apellido1.localeCompare(b.apellido1));
-            return jsonData;
         }
         
         // read file and send woorkbook
@@ -848,7 +852,7 @@ table {
                     <p>Seleccionar fichero Socios</p>
                 </li>
                 <li>
-                    <input type="file" name="file" id="file">
+                    <input type="file" name="file" id="file" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                 </li>
                 <li class="linea margenbotonprocesar">
                     <button id="botonprocesar" class="botonprocesar">
