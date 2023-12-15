@@ -139,7 +139,7 @@ table {
             ev.stopPropagation();
             ev.preventDefault();
             const form = document.getElementById("form");
-            await runSpin()
+            await runSpin();
 
             const valores = Object.fromEntries( 
                 new FormData( form )
@@ -147,18 +147,21 @@ table {
 
             const errors = await validationForm(valores);
             if (errors != "") {
-                alert(errors)
+                alert(errors);
+                await stopSpin();
                 return false;
             }
             
             const workbook = await fileToWorkbook(valores["file"]);
             if (!workbook) {
-                alert("Error de formato archivo excel");
+                alert("Error de formato archivo excel o fallo conexion a internet");
+                await stopSpin();
                 return false;
             }
             const jsonData = await workbookToJson(workbook);
             if (!jsonData) {
                 alert("Error de formato archivo excel");
+                await stopSpin();
                 return false;
             }
             await createPDF(jsonData, valores);
@@ -762,11 +765,16 @@ table {
         
         // read file and send woorkbook
         async function fileToWorkbook(file) {
-            const data = await file.arrayBuffer();
-            if (!data) return undefined;
-            const workbook = XLSX.read(data);
-            if (!workbook) return undefined;
-            return workbook;
+            try {
+                const data = await file.arrayBuffer();
+                if (!data) return undefined;
+                const workbook = XLSX.read(data);
+                if (!workbook) return undefined;
+                return workbook;
+            }
+            catch(error) {
+                return undefined;
+            }
         }
 
         // validation form and send errors to alert
