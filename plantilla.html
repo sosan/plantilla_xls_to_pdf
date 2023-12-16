@@ -1,137 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-    font-family:Arial, Helvetica, sans-serif;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-.contenido {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 20px;
-    
-}
-.formulario {
-    display: flex;
-    flex-direction: column;
-}
-.anchofull {
-    width: 100%;
-    height: 100vh;
-}
-.tabla{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    width: 475px;
-}
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td,
+        article,
+        aside,
+        canvas,
+        details,
+        embed,
+        figure,
+        figcaption,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        output,
+        ruby,
+        section,
+        summary,
+        time,
+        mark,
+        audio,
+        video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
 
-.linea {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    justify-content: end;
-    align-items: center;
-}
-.cabecera{
-    grid-area: 1 / 1 / 2 / 3;
-    justify-self: center ;
-    margin-bottom: 20px;
-}
-.textotitulosocios {
-    font-size: 30px;
-    font-weight: 900;
+        /* HTML5 display-role reset for older browsers */
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section {
+            display: block;
+        }
 
-}
-.anchonombres {
-    width: 30px;
-}
-.margenbotonprocesar {
-    margin-top: 20px;
-    grid-area: 5 / 1 / 5 / 3;
-    justify-self: center;
+        body {
+            line-height: 1;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-}
-.botonprocesar {
-    width: 200px;
-    height: 30px;
-}
-.marcopdf {
-    background-color: #ccc;
-    height: 100%;
-    width: 100%;
-}
-.loader {
-    display: block;
-    position: absolute;
-    top: 200px;
-    left: 20%;
-    border: 16px solid transparent;
-    border-top: 16px solid #3498db;
-    border-bottom: 16px solid #3498db;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 0.9s linear infinite;
-}
+        ol,
+        ul {
+            list-style: none;
+        }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+        blockquote,
+        q {
+            quotes: none;
+        }
 
-.invisible {
-    display: none;
-}
+        blockquote:before,
+        blockquote:after,
+        q:before,
+        q:after {
+            content: '';
+            content: none;
+        }
 
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .contenido {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 20px;
+
+        }
+
+        .formulario {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .anchofull {
+            width: 100%;
+            height: 100vh;
+        }
+
+        .tabla {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 475px;
+        }
+
+        .linea {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: end;
+            align-items: center;
+        }
+
+        .cabecera {
+            grid-area: 1 / 1 / 2 / 3;
+            justify-self: center;
+            margin-bottom: 20px;
+        }
+
+        .textotitulosocios {
+            font-size: 30px;
+            font-weight: 900;
+
+        }
+
+        .anchonombres {
+            width: 30px;
+        }
+
+        .margenbotonprocesar {
+            margin-top: 20px;
+            grid-area: 5 / 1 / 5 / 3;
+            justify-self: center;
+
+        }
+
+        .botonprocesar {
+            width: 200px;
+            height: 30px;
+        }
+
+        .marcopdf {
+            background-color: #ccc;
+            height: 100%;
+            width: 100%;
+        }
+
+        .loader {
+            display: block;
+            position: absolute;
+            top: 200px;
+            left: 20%;
+            border: 16px solid transparent;
+            border-top: 16px solid #3498db;
+            border-bottom: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .invisible {
+            display: none;
+        }
     </style>
     <title>Fichas Socios ES TURO</title>
-    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
-    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+    <script defer src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script defer src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script>
         async function clickProcess(ev) {
@@ -140,8 +243,8 @@ table {
             const form = document.getElementById("form");
             await runSpin();
 
-            const valores = Object.fromEntries( 
-                new FormData( form )
+            const valores = Object.fromEntries(
+                new FormData(form)
             );
 
             const errors = await validationForm(valores);
@@ -150,7 +253,7 @@ table {
                 await stopSpin();
                 return false;
             }
-            
+
             const workbook = await fileToWorkbook(valores["file"]);
             if (!workbook) {
                 alert("Error de formato archivo excel o fallo conexion a internet");
@@ -164,10 +267,10 @@ table {
                 return false;
             }
             await createPDF(jsonData, valores);
-            setTimeout( async () => {
+            setTimeout(async () => {
                 await stopSpin();
             }, 3500);
-            
+
         }
 
         async function runSpin() {
@@ -175,7 +278,7 @@ table {
             let textButtonProcess = document.getElementById("textButtonProcess");
             let buttonProcess = document.getElementById("botonprocesar");
             let loader = document.getElementById("loader");
-            
+
             spin.className = "fa fa-spinner fa-spin";
             buttonProcess.disabled = true;
             textButtonProcess.textContent = "PROCESANDO....";
@@ -200,7 +303,7 @@ table {
                 orientation: 'p',
                 unit: 'cm',
                 format: 'a4',
-                putOnlyUsedFonts:true,
+                putOnlyUsedFonts: true,
                 floatPrecision: 16
             };
             let doc = new jsPDF(options);
@@ -214,7 +317,7 @@ table {
                 "precio": `${valores["precio"]}€`,
                 "tituloAsocicacion": "Associació de Persones Majors",
                 "subTituloAsociacion": '”ES TURÓ”',
-                "data":  "DATA:....../....../......",
+                "data": "DATA:....../....../......",
                 "resguardo": "Resguard Associació",
                 "numsocio": "NUMERO DE SOCI:",
                 "nombreFuentes": {
@@ -225,7 +328,7 @@ table {
 
                 }
             };
-            
+
             const positions = {
                 1: {
                     textarea: {
@@ -570,7 +673,7 @@ table {
                 }
 
             }
-            
+
             let newPage = 0;
             await drawContorn(doc);
             const POSITIONS_LEN = Object.keys(positions).length;
@@ -588,7 +691,7 @@ table {
                     await generateRight(dataAsociation, doc, positions[key], currentSocio);
                     i++;
                 }
-                
+
                 if (drawNextPage) {
                     doc.addPage(options);
                     await drawContorn(doc);
@@ -603,7 +706,7 @@ table {
         async function setFontsToPDF(doc, regular, bold) {
             doc.addFileToVFS('LiberationSerif-Regular-normal.ttf', regular);
             doc.addFont('LiberationSerif-Regular-normal.ttf', 'LiberationSerif-Regular', 'normal');
-            
+
             doc.addFileToVFS('LiberationSerif-Bold-bold.ttf', bold);
             doc.addFont('LiberationSerif-Bold-bold.ttf', 'LiberationSerif-Bold', 'bold');
         }
@@ -618,19 +721,19 @@ table {
             // text area
             doc.setLineWidth(0.01);
             doc.rect(2.3, positions.textarea.yL, 7.9, 1.5);
-            
+
             // image
             doc.addImage(dataAsociation.imageData, "PNG", 2.2, positions.image.yL, 2, 2, null, "FAST");
-            
+
             // titulo
             doc.setFont(dataAsociation.nombreFuentes["liberationBold"], "bold");
             doc.setFontSize(12);
             doc.text(dataAsociation.tituloAsocicacion, 4.4, positions.titulo.yL);
-            
+
             // subtitulo
             doc.setFontSize(22);
             doc.text(dataAsociation.subTituloAsociacion, 5.2, positions.subtitulo.yL);
-            
+
             // precio
             doc.setFont("LiberationSerif-Bold", "bold");
             doc.setFontSize(24);
@@ -655,14 +758,14 @@ table {
             doc.setFont(dataAsociation.nombreFuentes["liberationRegular"], "normal");
             doc.setFontSize(11);
             const fullName = await getFullName(currentSocio);
-            
+
             doc.setFont(dataAsociation.nombreFuentes["liberationRegular"], "normal");
             doc.setFontSize(11);
             let numSocio = currentSocio.socio;
             if (!numSocio) {
                 numSocio = "-"
             }
-            doc.text(`${fullName.toUpperCase()}\n${dataAsociation.numsocio} ${numSocio}`, 6, positions.socio.yL,  { align: 'center', maxWidth: 7 });
+            doc.text(`${fullName.toUpperCase()}\n${dataAsociation.numsocio} ${numSocio}`, 6, positions.socio.yL, { align: 'center', maxWidth: 7 });
 
         }
 
@@ -679,13 +782,13 @@ table {
             } else {
                 fullName += " ";
             }
-            
+
             if (currentSocio.apellido2 !== "" && currentSocio.apellido2 !== undefined) {
                 fullName += ` ${currentSocio.apellido2.trim()}`;
             } else {
                 fullName += " ";
             }
-            
+
             return fullName;
         }
 
@@ -693,19 +796,19 @@ table {
             // text area
             doc.setLineWidth(0.01);
             doc.rect(10.7, positions.textarea.yR, 7.9, 1.5);
-            
+
             // image
             doc.addImage(dataAsociation.imageData, "PNG", 10.6, positions.image.yR, 2, 2, null, "FAST");
-            
+
             // titulo
             doc.setFont(dataAsociation.nombreFuentes["liberationBold"], "bold");
             doc.setFontSize(12);
             doc.text(dataAsociation.tituloAsocicacion, 12.7, positions.titulo.yR);
-            
+
             // subtitulo
             doc.setFontSize(22);
             doc.text(dataAsociation.subTituloAsociacion, 13.2, positions.subtitulo.yR);
-            
+
             // precio
             doc.setFont("LiberationSerif-Bold", "bold");
             doc.setFontSize(24);
@@ -730,7 +833,7 @@ table {
             doc.setFont(dataAsociation.nombreFuentes["liberationRegular"], "normal");
             doc.setFontSize(11);
             const fullName = await getFullName(currentSocio);
-            
+
             doc.setFont(dataAsociation.nombreFuentes["liberationRegular"], "normal");
             doc.setFontSize(11);
             let numSocio = currentSocio.socio;
@@ -738,8 +841,8 @@ table {
                 numSocio = "-"
             }
 
-            doc.text(`${fullName.toUpperCase()}\n${dataAsociation.numsocio} ${numSocio}`, 14.6, positions.socio.yL,  { align: 'center', maxWidth: 7 });
-            
+            doc.text(`${fullName.toUpperCase()}\n${dataAsociation.numsocio} ${numSocio}`, 14.6, positions.socio.yL, { align: 'center', maxWidth: 7 });
+
             doc.setLineWidth(0.01);
             doc.line(positions.line.xL, positions.line.yL, positions.line.xR, positions.line.yR);
         }
@@ -756,17 +859,17 @@ table {
                 }
 
                 // const data_headers = ["socio","apellido1","apellido2","nombre"];
-                const jsonData = XLSX.utils.sheet_to_json(sheet, {header: 0});
+                const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 0 });
                 if (!jsonData) {
                     return undefined;
                 }
                 jsonData.sort((a, b) => a.apellido1.localeCompare(b.apellido1));
                 return jsonData;
-            } catch(error) {
+            } catch (error) {
                 return undefined;
             }
         }
-        
+
         // read file and send woorkbook
         async function fileToWorkbook(file) {
             try {
@@ -776,7 +879,7 @@ table {
                 if (!workbook) return undefined;
                 return workbook;
             }
-            catch(error) {
+            catch (error) {
                 return undefined;
             }
         }
@@ -814,7 +917,7 @@ table {
         }
 
 
-        window.onload =  function(ev) {
+        window.onload = function (ev) {
             let botonprocesar = document.getElementById("botonprocesar");
             botonprocesar.addEventListener("click", clickProcess);
 
@@ -822,15 +925,16 @@ table {
             document.getElementById("fechaAnyo").value = `${currentAny + 1}`;
         };
 
-        
-</script>
+
+    </script>
 
 </head>
+
 <body class="contenido anchofull">
     <iframe src="" frameborder="0" id="framepdf" class="marcopdf">
     </iframe>
     <main class="anchofull formulario">
-        
+
         <form id="form" name="form" action="">
             <ul class="tabla">
                 <li class="linea cabecera">
@@ -852,7 +956,8 @@ table {
                     <p>Seleccionar fichero Socios</p>
                 </li>
                 <li>
-                    <input type="file" name="file" id="file" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                    <input type="file" name="file" id="file"
+                        accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                 </li>
                 <li class="linea margenbotonprocesar">
                     <button id="botonprocesar" class="botonprocesar">
@@ -884,4 +989,5 @@ table {
 
     </script>
 </body>
+
 </html>
