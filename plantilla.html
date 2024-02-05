@@ -188,9 +188,18 @@
 
         .margenbotonprocesar {
             margin-top: 20px;
-            grid-area: 5 / 1 / 5 / 3;
+            grid-area: 6 / 1 / 6 / 3;
             justify-self: center;
 
+        }
+
+        .ordenacion {
+            width: 100%;
+            grid-area: 5 / 1 / 5 / 3;
+            justify-content: center;
+            align-items: flex-end;
+            text-wrap: nowrap;
+            height: 30px;
         }
 
         .botonprocesar {
@@ -231,6 +240,13 @@
         .invisible {
             display: none;
         }
+        .radioinput {
+            margin: 0;
+            place-self: baseline;
+        }
+        .texto_ordenalfabetico{
+            margin-left: -10px;
+        }
     </style>
     <title>Fichas Socios ES TURO</title>
     <script defer src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
@@ -243,30 +259,30 @@
             const form = document.getElementById("form");
             await runSpin();
 
-            const valores = Object.fromEntries(
+            const valoresFormulario = Object.fromEntries(
                 new FormData(form)
             );
 
-            const errors = await validationForm(valores);
+            const errors = await validationForm(valoresFormulario);
             if (errors != "") {
                 alert(errors);
                 await stopSpin();
                 return false;
             }
 
-            const workbook = await fileToWorkbook(valores["file"]);
+            const workbook = await fileToWorkbook(valoresFormulario["file"]);
             if (!workbook) {
                 alert("Error de formato archivo excel o fallo conexion a internet");
                 await stopSpin();
                 return false;
             }
-            const jsonData = await workbookToJson(workbook);
+            const jsonData = await workbookToJson(workbook, valoresFormulario["orden"]);
             if (!jsonData) {
                 alert("Error de formato archivo excel");
                 await stopSpin();
                 return false;
             }
-            await createPDF(jsonData, valores);
+            await createPDF(jsonData, valoresFormulario);
             setTimeout(async () => {
                 await stopSpin();
             }, 3500);
@@ -318,7 +334,8 @@
                 "tituloAsocicacion": "Associació de Persones Majors",
                 "subTituloAsociacion": '”ES TURÓ”',
                 "data": "DATA:....../....../......",
-                "resguardo": "Resguard Associació",
+                "resguardoassoc": "Resguard Associació",
+                "resguardoclient": "Resguard SOCI",
                 "numsocio": "NUMERO DE SOCI:",
                 "nombreFuentes": {
                     "liberationRegular": "LiberationSerif-Regular",
@@ -330,345 +347,375 @@
             };
 
             const positions = {
-                1: {
-                    textarea: {
-                        xL: 0,
-                        yL: 4.7,
-                        xR: 0,
-                        yR: 4.7,
+                "1": {
+                    "textarea": {
+                        "xL": 0,
+                        "yL": 4.7,
+                        "xR": 0,
+                        "yR": 4.7,
                     },
-                    image: {
-                        xL: 0,
-                        yL: 2,
-                        xR: 0,
-                        yR: 2,
+                    "image": {
+                        "xL": 0,
+                        "yL": 2,
+                        "xR": 0,
+                        "yR": 2,
                     },
-                    titulo: {
-                        xL: 0,
-                        yL: 2.8,
-                        xR: 0,
-                        yR: 2.8,
+                    "titulo": {
+                        "xL": 0,
+                        "yL": 2.8,
+                        "xR": 0,
+                        "yR": 2.8,
                     },
-                    subtitulo: {
-                        xL: 0,
-                        yL: 3.5,
-                        xR: 0,
-                        yR: 3.5,
+                    "subtitulo": {
+                        "xL": 0,
+                        "yL": 3.5,
+                        "xR": 0,
+                        "yR": 3.5,
                     },
-                    precio: {
-                        xL: 0,
-                        yL: 4.5,
-                        xR: 0,
-                        yR: 4.5,
+                    "precio": {
+                        "xL": 0,
+                        "yL": 4.5,
+                        "xR": 0,
+                        "yR": 4.5,
                     },
-                    cuota: {
-                        xL: 0,
-                        yL: 4.5,
-                        xR: 0,
-                        yR: 4.5
+                    "cuota": {
+                        "xL": 0,
+                        "yL": 4.5,
+                        "xR": 0,
+                        "yR": 4.5
                     },
-                    data: {
-                        xL: 0,
-                        yL: 6.6,
-                        xR: 0,
-                        yR: 6.6
+                    "data": {
+                        "xL": 0,
+                        "yL": 6.6,
+                        "xR": 0,
+                        "yR": 6.6
                     },
-                    resguardo: {
-                        xL: 0,
-                        yL: 6.6,
-                        xR: 0,
-                        yR: 6.6
+                    "resguardoassoc": {
+                        "xL": 0,
+                        "yL": 6.6,
+                        "xR": 0,
+                        "yR": 6.6
                     },
-                    line: {
-                        xL: 2.1,
-                        yL: 6.8,
-                        xR: 18.8,
-                        yR: 6.8,
+                    "resguardoclient": {
+                        "xL": 0,
+                        "yL": 0,
+                        "xR": 0,
+                        "yR": 6.6
                     },
-                    socio: {
-                        xL: 0,
-                        yL: 5.2,
-                        xR: 0,
-                        yR: 5.2
+                    "line": {
+                        "xL": 2.1,
+                        "yL": 6.8,
+                        "xR": 18.8,
+                        "yR": 6.8,
                     },
-                    numsocio: {
-                        xL: 0,
-                        yL: 6,
-                        xR: 0,
-                        yR: 6
+                    "socio": {
+                        "xL": 0,
+                        "yL": 5.2,
+                        "xR": 0,
+                        "yR": 5.2
+                    },
+                    "numsocio": {
+                        "xL": 0,
+                        "yL": 6,
+                        "xR": 0,
+                        "yR": 6
                     }
 
                 },
-                2: {
-                    textarea: {
-                        xL: 0,
-                        yL: 9.6,
-                        xR: 0,
-                        yR: 9.6,
+                "2": {
+                    "textarea": {
+                        "xL": 0,
+                        "yL": 9.6,
+                        "xR": 0,
+                        "yR": 9.6,
                     },
-                    image: {
-                        xL: 0,
-                        yL: 6.9,
-                        xR: 0,
-                        yR: 6.9,
+                    "image": {
+                        "xL": 0,
+                        "yL": 6.9,
+                        "xR": 0,
+                        "yR": 6.9,
                     },
-                    titulo: {
-                        xL: 0,
-                        yL: 7.8,
-                        xR: 0,
-                        yR: 7.8,
+                    "titulo": {
+                        "xL": 0,
+                        "yL": 7.8,
+                        "xR": 0,
+                        "yR": 7.8,
                     },
-                    subtitulo: {
-                        xL: 0,
-                        yL: 8.5,
-                        xR: 0,
-                        yR: 8.5,
+                    "subtitulo": {
+                        "xL": 0,
+                        "yL": 8.5,
+                        "xR": 0,
+                        "yR": 8.5,
                     },
-                    precio: {
-                        xL: 0,
-                        yL: 9.4,
-                        xR: 0,
-                        yR: 9.4,
+                    "precio": {
+                        "xL": 0,
+                        "yL": 9.4,
+                        "xR": 0,
+                        "yR": 9.4,
                     },
-                    cuota: {
-                        xL: 0,
-                        yL: 9.4,
-                        xR: 0,
-                        yR: 9.4
+                    "cuota": {
+                        "xL": 0,
+                        "yL": 9.4,
+                        "xR": 0,
+                        "yR": 9.4
                     },
-                    data: {
-                        xL: 0,
-                        yL: 11.5,
-                        xR: 0,
-                        yR: 11.5
+                    "data": {
+                        "xL": 0,
+                        "yL": 11.5,
+                        "xR": 0,
+                        "yR": 11.5
                     },
-                    resguardo: {
-                        xL: 0,
-                        yL: 11.5,
-                        xR: 0,
-                        yR: 11.5
+                    "resguardoassoc": {
+                        "xL": 0,
+                        "yL": 11.5,
+                        "xR": 0,
+                        "yR": 11.5
                     },
-                    line: {
-                        xL: 2.1,
-                        yL: 11.7,
-                        xR: 18.8,
-                        yR: 11.7,
+                    "resguardoclient": {
+                        "xL": 0,
+                        "yL": 0,
+                        "xR": 0,
+                        "yR": 11.5
                     },
-                    socio: {
-                        xL: 0,
-                        yL: 10.10,
-                        xR: 0,
-                        yR: 10.10
+                    "line": {
+                        "xL": 2.1,
+                        "yL": 11.7,
+                        "xR": 18.8,
+                        "yR": 11.7,
                     },
-                    numsocio: {
-                        xL: 0,
-                        yL: 10.70,
-                        xR: 0,
-                        yR: 10.70
+                    "socio": {
+                        "xL": 0,
+                        "yL": 10.10,
+                        "xR": 0,
+                        "yR": 10.10
+                    },
+                    "numsocio": {
+                        "xL": 0,
+                        "yL": 10.70,
+                        "xR": 0,
+                        "yR": 10.70
                     }
                 },
-                3: {
-                    textarea: {
-                        xL: 0,
-                        yL: 14.5,
-                        xR: 0,
-                        yR: 14.5,
+                "3": {
+                    "textarea": {
+                        "xL": 0,
+                        "yL": 14.5,
+                        "xR": 0,
+                        "yR": 14.5,
                     },
-                    image: {
-                        xL: 0,
-                        yL: 11.8,
-                        xR: 0,
-                        yR: 11.8,
+                    "image": {
+                        "xL": 0,
+                        "yL": 11.8,
+                        "xR": 0,
+                        "yR": 11.8,
                     },
-                    titulo: {
-                        xL: 0,
-                        yL: 12.7,
-                        xR: 0,
-                        yR: 12.7,
+                    "titulo": {
+                        "xL": 0,
+                        "yL": 12.7,
+                        "xR": 0,
+                        "yR": 12.7,
                     },
-                    subtitulo: {
-                        xL: 0,
-                        yL: 13.4,
-                        xR: 0,
-                        yR: 13.4,
+                    "subtitulo": {
+                        "xL": 0,
+                        "yL": 13.4,
+                        "xR": 0,
+                        "yR": 13.4,
                     },
-                    precio: {
-                        xL: 0,
-                        yL: 14.3,
-                        xR: 0,
-                        yR: 14.3,
+                    "precio": {
+                        "xL": 0,
+                        "yL": 14.3,
+                        "xR": 0,
+                        "yR": 14.3,
                     },
-                    cuota: {
-                        xL: 0,
-                        yL: 14.3,
-                        xR: 0,
-                        yR: 14.3
+                    "cuota": {
+                        "xL": 0,
+                        "yL": 14.3,
+                        "xR": 0,
+                        "yR": 14.3
                     },
-                    data: {
-                        xL: 0,
-                        yL: 16.4,
-                        xR: 0,
-                        yR: 16.4
+                    "data": {
+                        "xL": 0,
+                        "yL": 16.4,
+                        "xR": 0,
+                        "yR": 16.4
                     },
-                    resguardo: {
-                        xL: 0,
-                        yL: 16.4,
-                        xR: 0,
-                        yR: 16.4
+                    "resguardoassoc": {
+                        "xL": 0,
+                        "yL": 16.4,
+                        "xR": 0,
+                        "yR": 16.4
                     },
-                    line: {
-                        xL: 2.1,
-                        yL: 16.6,
-                        xR: 18.8,
-                        yR: 16.6,
+                    "resguardoclient": {
+                        "xL": 0,
+                        "yL": 0,
+                        "xR": 0,
+                        "yR": 16.4
                     },
-                    socio: {
-                        xL: 0,
-                        yL: 15,
-                        xR: 0,
-                        yR: 15
+                    "line": {
+                        "xL": 2.1,
+                        "yL": 16.6,
+                        "xR": 18.8,
+                        "yR": 16.6,
                     },
-                    numsocio: {
-                        xL: 0,
-                        yL: 16,
-                        xR: 0,
-                        yR: 16
+                    "socio": {
+                        "xL": 0,
+                        "yL": 15,
+                        "xR": 0,
+                        "yR": 15
+                    },
+                    "numsocio": {
+                        "xL": 0,
+                        "yL": 16,
+                        "xR": 0,
+                        "yR": 16
                     }
                 },
-                4: {
-                    textarea: {
-                        xL: 0,
-                        yL: 19.4,
-                        xR: 0,
-                        yR: 19.4,
+                "4": {
+                    "textarea": {
+                        "xL": 0,
+                        "yL": 19.4,
+                        "xR": 0,
+                        "yR": 19.4,
                     },
-                    image: {
-                        xL: 0,
-                        yL: 16.7,
-                        xR: 0,
-                        yR: 16.7,
+                    "image": {
+                        "xL": 0,
+                        "yL": 16.7,
+                        "xR": 0,
+                        "yR": 16.7,
                     },
-                    titulo: {
-                        xL: 0,
-                        yL: 17.6,
-                        xR: 0,
-                        yR: 17.6,
+                    "titulo": {
+                        "xL": 0,
+                        "yL": 17.6,
+                        "xR": 0,
+                        "yR": 17.6,
                     },
-                    subtitulo: {
-                        xL: 0,
-                        yL: 18.3,
-                        xR: 0,
-                        yR: 18.3,
+                    "subtitulo": {
+                        "xL": 0,
+                        "yL": 18.3,
+                        "xR": 0,
+                        "yR": 18.3,
                     },
-                    precio: {
-                        xL: 0,
-                        yL: 19.2,
-                        xR: 0,
-                        yR: 19.2,
+                    "precio": {
+                        "xL": 0,
+                        "yL": 19.2,
+                        "xR": 0,
+                        "yR": 19.2,
                     },
-                    cuota: {
-                        xL: 0,
-                        yL: 19.2,
-                        xR: 0,
-                        yR: 19.2
+                    "cuota": {
+                        "xL": 0,
+                        "yL": 19.2,
+                        "xR": 0,
+                        "yR": 19.2
                     },
-                    data: {
-                        xL: 0,
-                        yL: 21.3,
-                        xR: 0,
-                        yR: 21.3
+                    "data": {
+                        "xL": 0,
+                        "yL": 21.3,
+                        "xR": 0,
+                        "yR": 21.3
                     },
-                    resguardo: {
-                        xL: 0,
-                        yL: 21.3,
-                        xR: 0,
-                        yR: 21.3
+                    "resguardoassoc": {
+                        "xL": 0,
+                        "yL": 21.3,
+                        "xR": 0,
+                        "yR": 21.3
                     },
-                    line: {
-                        xL: 2.1,
-                        yL: 21.5,
-                        xR: 18.8,
-                        yR: 21.5,
+                    "resguardoclient": {
+                        "xL": 0,
+                        "yL": 0,
+                        "xR": 0,
+                        "yR": 21.3
                     },
-                    socio: {
-                        xL: 0,
-                        yL: 19.90,
-                        xR: 0,
-                        yR: 19.90
+                    "line": {
+                        "xL": 2.1,
+                        "yL": 21.5,
+                        "xR": 18.8,
+                        "yR": 21.5,
                     },
-                    numsocio: {
-                        xL: 0,
-                        yL: 20.50,
-                        xR: 0,
-                        yR: 20.50
+                    "socio": {
+                        "xL": 0,
+                        "yL": 19.90,
+                        "xR": 0,
+                        "yR": 19.90
+                    },
+                    "numsocio": {
+                        "xL": 0,
+                        "yL": 20.50,
+                        "xR": 0,
+                        "yR": 20.50
                     }
                 },
-                5: {
-                    textarea: {
-                        xL: 0,
-                        yL: 24.3,
-                        xR: 0,
-                        yR: 24.3,
+                "5": {
+                    "textarea": {
+                        "xL": 0,
+                        "yL": 24.3,
+                        "xR": 0,
+                        "yR": 24.3,
                     },
-                    image: {
-                        xL: 0,
-                        yL: 21.6,
-                        xR: 0,
-                        yR: 21.6,
+                    "image": {
+                        "xL": 0,
+                        "yL": 21.6,
+                        "xR": 0,
+                        "yR": 21.6,
                     },
-                    titulo: {
-                        xL: 0,
-                        yL: 22.5,
-                        xR: 0,
-                        yR: 22.5,
+                    "titulo": {
+                        "xL": 0,
+                        "yL": 22.5,
+                        "xR": 0,
+                        "yR": 22.5,
                     },
-                    subtitulo: {
-                        xL: 0,
-                        yL: 23.2,
-                        xR: 0,
-                        yR: 23.2,
+                    "subtitulo": {
+                        "xL": 0,
+                        "yL": 23.2,
+                        "xR": 0,
+                        "yR": 23.2,
                     },
-                    precio: {
-                        xL: 0,
-                        yL: 24.1,
-                        xR: 0,
-                        yR: 24.1,
+                    "precio": {
+                        "xL": 0,
+                        "yL": 24.1,
+                        "xR": 0,
+                        "yR": 24.1,
                     },
-                    cuota: {
-                        xL: 0,
-                        yL: 24.1,
-                        xR: 0,
-                        yR: 24.1
+                    "cuota": {
+                        "xL": 0,
+                        "yL": 24.1,
+                        "xR": 0,
+                        "yR": 24.1
                     },
-                    data: {
-                        xL: 0,
-                        yL: 26.2,
-                        xR: 0,
-                        yR: 26.2
+                    "data": {
+                        "xL": 0,
+                        "yL": 26.2,
+                        "xR": 0,
+                        "yR": 26.2
                     },
-                    resguardo: {
-                        xL: 0,
-                        yL: 26.2,
-                        xR: 0,
-                        yR: 26.2
+                    "resguardoassoc": {
+                        "xL": 0,
+                        "yL": 26.2,
+                        "xR": 0,
+                        "yR": 26.2
                     },
-                    line: {
-                        xL: 2.1,
-                        yL: 26.4,
-                        xR: 18.8,
-                        yR: 26.4,
+                    "resguardoclient": {
+                        "xL": 0,
+                        "yL": 0,
+                        "xR": 0,
+                        "yR": 26.2
                     },
-                    socio: {
-                        xL: 0,
-                        yL: 24.80,
-                        xR: 0,
-                        yR: 24.80
+                    "line": {
+                        "xL": 2.1,
+                        "yL": 26.4,
+                        "xR": 18.8,
+                        "yR": 26.4,
                     },
-                    numsocio: {
-                        xL: 0,
-                        yL: 25.40,
-                        xR: 0,
-                        yR: 25.40
+                    "socio": {
+                        "xL": 0,
+                        "yL": 24.80,
+                        "xR": 0,
+                        "yR": 24.80
+                    },
+                    "numsocio": {
+                        "xL": 0,
+                        "yL": 25.40,
+                        "xR": 0,
+                        "yR": 25.40
                     }
                 }
 
@@ -752,7 +799,7 @@
             // resguardo
             doc.setFont(dataAsociation.nombreFuentes["liberationRegular"], "normal");
             doc.setFontSize(10);
-            doc.text(dataAsociation.resguardo, 6.7, positions.resguardo.yL);
+            doc.text(dataAsociation.resguardoassoc, 6.7, positions.resguardoassoc.yL);
 
             // info socio
             doc.setFont(dataAsociation.nombreFuentes["liberationRegular"], "normal");
@@ -827,7 +874,7 @@
             // resguardo
             doc.setFont(dataAsociation.nombreFuentes["liberationRegular"], "normal");
             doc.setFontSize(10);
-            doc.text(dataAsociation.resguardo, 15.5, positions.resguardo.yR);
+            doc.text(dataAsociation.resguardoclient, 15.5, positions.resguardoclient.yR);
 
             // info socio
             doc.setFont(dataAsociation.nombreFuentes["liberationRegular"], "normal");
@@ -848,7 +895,7 @@
         }
 
 
-        async function workbookToJson(workbook) {
+        async function workbookToJson(workbook, tipoOrden) {
             try {
                 if (!workbook) {
                     return undefined;
@@ -863,7 +910,19 @@
                 if (!jsonData) {
                     return undefined;
                 }
-                jsonData.sort((a, b) => a.apellido1.localeCompare(b.apellido1));
+                if (tipoOrden === "alfabetico") { 
+                    jsonData.sort((a, b) => a.apellido1.localeCompare(b.apellido1));
+                } else if (tipoOrden === "socios") {
+                    jsonData.sort((a, b) => {
+                        // console.log(JSON.stringify(a.socio));
+                        // console.log(JSON.stringify(b.socio));
+                        return parseInt(a.socio) - parseInt(b.socio);
+                    });
+                } else {
+                    jsonData.sort((a, b) => a.apellido1.localeCompare(b.apellido1));
+                }
+
+
                 return jsonData;
             } catch (error) {
                 return undefined;
@@ -931,7 +990,7 @@
 </head>
 
 <body class="contenido anchofull">
-    <iframe src="" frameborder="0" id="framepdf" class="marcopdf">
+    <iframe src="" frameborder="0" id="framepdf" class="marcopdf" title="pdf">
     </iframe>
     <main class="anchofull formulario">
 
@@ -958,6 +1017,17 @@
                 <li>
                     <input type="file" name="file" id="file"
                         accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                </li>
+                <li class="linea ordenacion">
+                    <fieldset id="group1" class="linea">
+                        <legend></legend>
+                        <input type="radio" name="orden" id="ordenado_alfabetico" value="alfabetico" class="radioinput" checked>
+                        <label for="ordenado_alfabetico" class="texto_ordenalfabetico">Orden alfabetico</label>
+                
+                        <input type="radio" name="orden" id="ordenado_socios" value="socios" class="radioinput">
+                        <label for="ordenado_socios" class="texto_ordenalfabetico">Orden por numero socios</label>
+                
+                    </fieldset>
                 </li>
                 <li class="linea margenbotonprocesar">
                     <button id="botonprocesar" class="botonprocesar">
