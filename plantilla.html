@@ -721,10 +721,11 @@
 
             }
 
-            let newPage = 0;
-            await drawContorn(doc);
+            let countPage = 1;
             const POSITIONS_LEN = Object.keys(positions).length;
             let drawNextPage = true;
+            const totalPages = Math.round(jsonDataSocios.length / POSITIONS_LEN);
+            await drawContorn(doc, countPage, dataAsociation, totalPages);
 
             for (let i = 0; i < jsonDataSocios.length;) {
                 for (let key = 1; key <= POSITIONS_LEN; key++) {
@@ -740,8 +741,9 @@
                 }
 
                 if (drawNextPage) {
+                    countPage++;
                     doc.addPage(options);
-                    await drawContorn(doc);
+                    await drawContorn(doc, countPage, dataAsociation, totalPages);
                 }
 
             }
@@ -758,10 +760,13 @@
             doc.addFont('LiberationSerif-Bold-bold.ttf', 'LiberationSerif-Bold', 'bold');
         }
 
-        async function drawContorn(doc) {
+        async function drawContorn(doc, countPage, dataAsociation, totalPages) {
             doc.setLineWidth(0.01);
             doc.rect(2.1, 1.9, 16.7, 24.5);
             doc.line(10.5, 1.9, 10.5, 26.4);
+            doc.setFont(dataAsociation.nombreFuentes["liberationBold"], "bold");
+            doc.setFontSize(12);
+            doc.text('Página ' + countPage + " / " + totalPages, 9, 27.1);
         }
 
         async function generateLeft(dataAsociation, doc, positions, currentSocio) {
@@ -981,7 +986,7 @@
             botonprocesar.addEventListener("click", clickProcess);
 
             const currentAny = new Date().getFullYear();
-            document.getElementById("fechaAnyo").value = `${currentAny + 1}`;
+            document.getElementById("fechaAnyo").value = `${currentAny}`;
         };
 
 
